@@ -1,0 +1,139 @@
+/* Booking Forms Styling */
+.booking-container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .booking-container h2 {
+    margin-bottom: 10px;
+    color: #1B2A1D;
+  }
+  
+  .booking-container p {
+    margin-bottom: 20px;
+    color: #6C6C6C;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  form select{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #9EA677;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  form input[type="date"],
+  form input[type="time"],
+  form textarea {
+    width: 98%;
+    padding: 10px;
+    border: 1px solid #9EA677;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  
+  form textarea {
+    resize: none;
+  }
+  /* Booking Forms Styling */
+.booking-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.booking-container h2 {
+  margin-bottom: 10px;
+  color: #1B2A1D;
+}
+
+.booking-container p {
+  margin-bottom: 20px;
+  color: #6C6C6C;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.form-group label {
+  color: #555;
+
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+form select{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #9EA677;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+form input[type="date"],
+form input[type="time"],
+form textarea {
+  width: 98%;
+  padding: 10px;
+  border: 1px solid #9EA677;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+form select{
+  font-family:'Times New Roman', Times, serif;
+
+}
+
+form textarea {
+  resize: none;
+}
+
+.submit-button {
+  font-family:'Times New Roman', Times, serif;
+  width: 100%;
+  padding: 10px;
+  background-color: #1B2A1D;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.submit-button:hover {
+  background-color: #c6c6c6;
+}
+

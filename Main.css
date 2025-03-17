@@ -1,0 +1,97 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 17, 2025, 11:37:30 PM
+    Author     : ghade
+*/
+
+/* General Body Styling */
+body {
+    font-family:'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    color: #004d3b;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+
+a {
+    font-weight: bold;
+    color: #E1B599;
+    text-decoration: none;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+    a:hover {
+    background-color: #c6c6c6;
+    }
+
+/* Navbar Styles */
+.navbar {
+    box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2); 
+
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #004d3b;
+}
+
+
+    .navbar .logo {
+        display: flex;
+        align-items: center;
+    }
+
+
+    .navbar .logo {
+
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #004d3b;
+        text-decoration: none;
+    }
+
+/*
+
+        .navbar .logo img {
+            height: 60px;
+            margin-right: 10px;
+        }
+            */
+
+/* Footer */
+.footer {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/IMG_2375.jpg') center/cover no-repeat;
+    background-color: #A1AD95; /* Black from color palette */
+    color: white;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-top: auto;
+}
+
+    .footer .social-links {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1rem 0 0;
+        padding: 0;
+    }
+
+        .footer .social-links img {
+            width: 30px;
+            height: 30px;
+            transition: transform 0.3s;
+        }
+
+            .footer .social-links img:hover {
+                transform: scale(1.1);
+            }
