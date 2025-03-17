@@ -1,0 +1,126 @@
+﻿
+
+.medication-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    background-color: #FFFFFF;
+}
+
+.medication-container {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    gap: 2rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-box {
+    flex: 1;
+    background: url('images/waterr.jpg') center/cover no-repeat;
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+    .info-box h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-box p {
+        margin-bottom: 1.5rem;
+    }
+
+    .info-box .btn-outline {
+        padding: 0.75rem 2rem;
+        color: #0463FA;
+        border: 2px solid white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .info-box .btn-outline:hover {
+            background-color: #E5DDDE;
+            color: #0463FA;
+        }
+
+.form-box {
+    flex: 1;
+    padding: 2rem;
+}
+
+    .form-box h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #002324;
+    }
+
+.form-row {
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    flex: 1;
+    margin-bottom: 1.5rem;
+}
+
+.form-box label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+}
+
+.form-box input[type="text"],
+.form-box input[type="number"] {
+    width: 70%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.radio-group label,
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+}
+
+.radio-group input,
+.checkbox-group input {
+    margin-right: 0.5rem;
+}
+
+form .prebtn {
+    font-family: 'Times New Roman', Times, serif;
+    width: 100%;
+    padding: 10px;
+    background-color: #1B2A1D;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+
+.prebtn:hover {
+    background-color: #c6c6c6;
+}
+

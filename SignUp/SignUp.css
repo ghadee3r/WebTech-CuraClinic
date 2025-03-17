@@ -1,0 +1,125 @@
+﻿
+.signup-section {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); 
+    max-width: 70%; 
+    background-color: white; 
+    margin: 5% auto; 
+    border-radius: 10px;
+
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+
+
+footer {
+    margin-top: auto; 
+}
+
+
+.left-column {
+    padding: 2rem;
+    flex: 1;
+    background-image: url('images/signup3.jpg');
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    height: 720px;
+    width: 100rem;
+    border-radius: 10px 0 0 10px;
+}
+
+
+.form-container {
+    flex: 1;
+    padding: 2rem;
+    background: white;
+    border-radius: 0 10px 10px 0; 
+}
+
+
+
+    .left-column h2 {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+        color: #555;
+    }
+
+    .left-column p {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: #555;
+    }
+
+.hidden {
+    display: none;
+}
+
+    .form-container h1{
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #555;
+    }
+    .form-container h3 {
+        color: #555;
+
+    }
+
+
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+    .radio-group label {
+        font-size: 1rem;
+        color: #555;
+        cursor: pointer;
+    }
+
+    .radio-group input {
+        margin-right: 0.5rem;
+    }
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #555;
+}
+
+form input,
+form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form .Signupbtn {
+    font-family: 'Times New Roman', Times, serif;
+    width: 100%;
+    padding: 10px;
+    background-color: #1B2A1D;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow here */
+}
+
+
+ .Signupbtn:hover {
+    background-color: #c6c6c6;
+}
+
+form select {
+
+    font-family: 'Times New Roman', Times, serif;
+}
