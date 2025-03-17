@@ -1,3 +1,38 @@
+<?php
+// Enable error reporting
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Database connection
+$con = mysqli_connect('localhost', 'root', 'root', 'cura', '8889');
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+
+$specialties = [];
+$doctors = [];
+
+$sql = "SELECT * FROM speciality";
+$result = mysqli_query($con, $sql);
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $specialties[] = $row;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $selectedSpecialty = $_POST['speciality'];
+
+    $sql_doctors = "SELECT * FROM doctor WHERE specialityID = (
+                        SELECT ID FROM speciality WHERE speciality = '$selectedSpecialty'
+                    )";
+    $result_doctors = mysqli_query($con, $sql_doctors);
+
+    while ($row = mysqli_fetch_assoc($result_doctors)) {
+        $doctors[] = $row;
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,46 +67,40 @@
     <p>Select your desired specialty and fill in the details below.</p>
 
     <!-- First Form: Specialty Selection -->
-    <form class="specialty-form" action='booking.php'>
+    <form class="specialty-form" action='booking.php' method="POST">
       <div class="form-group">
         <label for="specialty">Choose a Specialty:</label>
-        <select id="specialty" name="specialty" required>
+        <select id="specialty" name="speciality" required>
           
           <option value="" disabled selected>Select a specialty</option>
 
-          <?php
-         
-          ini_set('display_errors', '1');
-          error_reporting(E_ALL);
-          
-          $con= mysqli_connect('localhost','root','root','cura','8889');
-          $sqlsp="SELECT * FROM speciality";
-          $resp= mysqli_query($con, $sqlsp);
-          while ($row = mysqli_fetch_assoc($resp)){
-              echo "<option value='{$row['specialty']}'>{$row['specialty']}</option>";
-          };
-          
-          
-
-          ?>
-          <!-- 
-          <option value="Child">Parent & Child Therapy</option>
-          <option value="couple">Individual Conseling</option>
-          <option value="Workshops">Workshops & Seminars</option>
--->
+<?php foreach ($specialties as $specialty): ?>
+    <option value="<?php echo $specialty['speciality']; ?>">
+        <?php echo $specialty['speciality']; ?>
+    </option>
+<?php endforeach; ?>
         </select>
       </div>
       <button type="submit" class="submit-button">Next</button>
+      
+      
+      
     </form>
+    
+<?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($doctors)): ?>
+    <form class="appointment-form" action="addnewappointment.php" method="POST">
+        <div class="form-group">
+            <label for="doctor">Choose a Doctor:</label>
+            <select id="doctor" name="doctor" required>
+                <option value="" disabled selected>Select a doctor</option>
 
-    <form class="appointment-form">
-      <div class="form-group">
-        <label for="doctor">Choose a Doctor:</label>
-        <select id="doctor" name="doctor" required>
-          <option value="" disabled selected>Select a doctor</option>
-          <!-- Options will be dynamically populated based on specialty -->
-          <option ></option>
-          <option ></option>
+                <?php foreach ($doctors as $doctor): ?>
+                    <option value="<?php echo $doctor['ID']; ?>">
+                        <?php echo $doctor['firstName'] . ' ' . $doctor['lastName']; ?>
+                    </option>
+                <?php endforeach; ?>
+
+  
         </select>
       </div>
 
@@ -90,8 +119,9 @@
         <textarea id="reason" name="reason" rows="4" placeholder="Briefly describe the reason for your visit..." required></textarea>
       </div>
 
-      <button type="submit" class="submit-button">Book Appointment</button>
+      <input type="submit" class="submit-button" value="Book Appointment">
     </form>
+    <?php endif; ?> 
   </main>
 
 
