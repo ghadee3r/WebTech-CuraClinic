@@ -1,0 +1,190 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 18, 2025, 12:09:05 AM
+    Author     : ghade
+*/
+
+
+
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/homeMain.jpg') center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 5rem 1rem;
+    flex: 1;
+}
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero p {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.hero .btn {
+    background-color: #d8c9ca; 
+    color: #ad6464; 
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+    .hero .btn:hover {
+        color: #ffffff;
+        background: #b16d72;
+        transform: scale(1.05);
+
+
+    }
+
+.hero .btn-alt {
+    background-color: white;
+    color: #002324; 
+}
+
+    .hero .btn-alt:hover {
+        background-color: #f4f4f4;
+        transform: scale(1.05);
+
+    }
+
+
+.about {
+    padding: 3rem 1rem;
+}
+
+.about-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+}
+
+.about-left {
+    flex: 1;
+    text-align: center;
+}
+
+    .about-left img {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+.about-right {
+    flex: 1;
+    padding: 1rem;
+}
+
+    .about-right h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .about-right p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        color: #555; 
+    }
+
+.about-list {
+    list-style: none;
+    padding: 0;
+}
+
+    .about-list li {
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+        color: #002324; 
+    }
+
+.check-icon {
+    margin-right: 0.5rem;
+    color: #EFB6A2; 
+    font-size: 1.25rem;
+}
+
+
+
+.services {
+    padding: 3rem 1rem;
+    background-color: #FFFFFF;
+    text-align: center;
+}
+
+.services h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.service-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.service-card:hover {
+    transform: scale(1.05);
+}
+
+.circle {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.circle img {
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.service-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.service-card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.dark-green-line {
+    border: none; 
+    border-top: 2px solid #949494; 
+    width: 50%; 
+    margin: 20px none; 
+  }
+  

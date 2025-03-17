@@ -8,10 +8,11 @@
     <title>CURA - Make an appointment</title>
     <!-- External CSS -->
     <link rel="stylesheet" href="booking.css">
-    <link rel="stylesheet" href="Main.css">
-    <script src=""></script>
+    <link rel="stylesheet" href="../Main.css">
+    <script src="booking.js"></script>
 
 </head>
+
 
 <body>
     <!-- Navbar Start -->
@@ -103,9 +104,9 @@
               <strong>Phone:</strong> (966) 556-789-5900
           </p>
           <ul class="social-links">
-              <li><img src="images/twitter.webp" alt="Twitter"></li>
-              <li><img src="images/free-instagram-logo-icon-3497-thumb.png" alt="Instagram"></li>
-              <li><img src="images/Email542689.png" alt="Email"></li>
+              <li><img src="../images/twitter.webp" alt="Twitter"></li>
+              <li><img src="../images/free-instagram-logo-icon-3497-thumb.png" alt="Instagram"></li>
+              <li><img src="../images/Email542689.png" alt="Email"></li>
           </ul>
       </div>
   </footer>
