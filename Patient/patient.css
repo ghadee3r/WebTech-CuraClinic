@@ -1,0 +1,171 @@
+body {
+    color: #555;
+}
+
+
+
+#patientSignOut {
+    display: inline-block;
+    background: #1B2A1D;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    width: 67px;
+}
+
+#patientSignOut:hover {
+    background-color: #c6c6c6;
+}
+
+
+
+#patientWelcome {
+  display: flex;
+  flex-direction: row; /* Keep items in a row */
+  align-items: center; /* Align items to the top */
+  background: white;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  width: 99%;
+  max-width: 1700px;
+}
+
+#patientWelcomeLeft {
+    font-family:'Times New Roman', Times, serif;
+    flex: 1;
+    background-image: url('../images/oceanlike.jpg');
+    background-repeat: no-repeat;  
+    background-size: cover;  
+    padding: 2rem;
+    border-radius: 10px 0 0 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    height:520px;
+    font-size: 1.8rem;
+    color: #e4e7e7;
+}
+
+#patientInfoContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+#patientInfo {
+    padding: 15px;
+    text-align: center;
+    font-size: large;
+    background-color: #fffefe;
+    border-radius: 12px;
+    margin: 15px;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto; 
+    display: block;
+}
+
+#patientInfo p {
+    text-align: center;
+    font-size: large;
+}
+
+#patientName {
+    font-size: 3rem;
+}
+
+
+
+#linkToBook {
+    margin-top: 10px;
+    text-align: center;
+    background: #1b2a1d;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#linkToBook:hover{
+    background-color: #c6c6c6;
+}
+
+
+
+#patientAppointments {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 1rem auto;
+    font-family:'Times New Roman', Times, serif;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+#patientAppointments thead {
+    background-color: #002324;
+    color: #fff;
+}
+
+#patientAppointments th, #patientAppointments td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+#patientAppointments tbody tr:nth-child(even) {
+    background-color: #e4e4e4;
+    color: #555;
+}
+
+#patientAppointments tbody tr:nth-child(even):hover {
+    background-color: #c0c0c0;
+    color: #000000;
+}
+
+#patientAppointments tbody tr:hover {
+    background: #f4f4f4;
+    color: #000000;
+}
+
+#patientAppointments th {
+    font-weight: bold;
+}
+
+#atientAppointments td {
+    color: #374151;
+}
+
+#patientAppointments tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.patientDoctorPhoto {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover; 
+    border: 1px solid #e5e5e5;
+}
+
+.patientCancel {
+    background-color: #fff;
+    color: #ad6464;
+    border: 0.5px solid #ad6464;
+    padding: 4px 7px;
+    border-radius: 8px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.patientCancel:hover {
+    background-color: #cc0000;
+    color: #fff;
+    border: none;
+}
