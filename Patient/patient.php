@@ -15,7 +15,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 // Ensure the patient is logged in
-if (!isset($_SESSION['patient_ID'])) { // Patient ID from session
+if (!isset($_SESSION['patient_ID'])) { 
     header("Location: ../login.php");
     exit();
 }
@@ -97,7 +97,7 @@ $result_appointments = mysqli_query($conn, $query_appointments);
                     <td><?php $row['date'] ?></td>
                     <td><?php $row['doctor_name'] ?></td>
                     <td>
-                        <img src="../images/<?php $row['doctor_photo'] ?>" 
+                        <img src="../DBimages/<?php $row['doctor_photo'] ?>" 
                              alt="Doctor Photo" class="patientDoctorPhoto">
                     </td>
                     <td><?php $row['status'] ?></td>
