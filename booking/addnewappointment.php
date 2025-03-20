@@ -23,7 +23,6 @@ $patientID = $_SESSION['patient_id'] ?? 1;
 
 $status = 'Pending';
 
-
 $sql = "INSERT INTO appointment (patientID, doctorID, date, time, reason, status)
         VALUES ('$patientID', '$doctorID', '$date', '$time', '$reason', '$status')";
 
