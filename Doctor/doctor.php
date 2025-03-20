@@ -90,11 +90,11 @@ function calculateAge($dob) {
         <h2>Dr. <?php echo $doctor['firstName'] . ' ' . $doctor['lastName']; ?>!</h2>
     </div>
     <div class="doctor-profile">
-        <img src="../images/doctorpic.jpg" alt="Doctor Photo" class="profile-pic">
+        <img src="../DBimages/<?php$doctor['uniqueFileName']?>" alt="Doctor Photo" class="profile-pic">
         <p><strong>Name:</strong> Dr. <?php echo $doctor['firstName'] . ' ' . $doctor['lastName']; ?></p>
         <p><strong>ID:</strong> <?php echo $doctor_id; ?></p>
         <p><strong>Email:</strong> <?php echo $doctor['emailAddress']; ?></p>
-        <p><strong>Specialty:</strong> <?php echo $doctor['speciality']; ?></p>
+        <p><strong>Specialty:</strong> <?php echo $doctor['speciality']; ?></p>S
     </div>
 </section>
 
