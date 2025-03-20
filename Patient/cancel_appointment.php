@@ -1,9 +1,11 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 session_start();
 $servername = "localhost"; 
 $username = "root"; 
 $password = "root"; 
-$database = "cura"; 
+$database = "cura2"; 
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $database);
