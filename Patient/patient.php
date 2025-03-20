@@ -5,7 +5,7 @@ session_start();
 $servername = "localhost"; 
 $username = "root"; 
 $password = "root"; 
-$database = "cura2"; 
+$database = "cura"; 
 $port='8889';
 
 // Create connection
