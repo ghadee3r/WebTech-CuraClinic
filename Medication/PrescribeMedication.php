@@ -7,7 +7,7 @@ $db_user = "root";
 $db_pass = "root";
 $db_name = "cura";
 
-$conn = mysqli_connect($host, $db_user, $db_pass, $db_name,'8889');
+$conn = mysqli_connect($host, $db_user, $db_pass, $db_name, '8889');
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -20,12 +20,11 @@ if (!isset($_SESSION['DOCTOR_ID'])) {
 
 $doctor_id = $_SESSION['DOCTOR_ID'];
 
-// Check for patient_id in query string
-if (!isset($_GET['patient_ID'])) {
+if (!isset($_GET['patient_id'])) {
     die("No patient selected.");
 }
 
-$patient_id = $_GET['patient_ID'];
+$patient_id = $_GET['patient_id'];
 
 // Get patient info
 $sql_patient = "SELECT firstName, lastName, DoB, Gender FROM Patient WHERE id = $patient_id";
@@ -37,7 +36,6 @@ if (!$result_patient || mysqli_num_rows($result_patient) == 0) {
 
 $patient = mysqli_fetch_assoc($result_patient);
 
-// Calculate age
 function calculateAge($dob) {
     $birthDate = new DateTime($dob);
     $today = new DateTime("today");
@@ -45,6 +43,10 @@ function calculateAge($dob) {
 }
 
 $patient_age = calculateAge($patient['DoB']);
+
+
+$sql_meds = "SELECT id, MedicationName FROM Medication";
+$result_meds = mysqli_query($conn, $sql_meds);
 ?>
 
 <!DOCTYPE html>
@@ -79,51 +81,50 @@ $patient_age = calculateAge($patient['DoB']);
                 <h1>Patient's Medications</h1>
 
                 <form action="SubmitPrescription.php" method="POST">
-                    <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>">
+    <input type="hidden" name="patient_id" value="<?php echo $patient_id; ?>">
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="patient-name">Patient's Name</label>
-                            <input type="text" id="patient-name" name="patient_name" value="<?php echo $patient['firstName'] . ' ' . $patient['lastName']; ?>" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="patient-age">Age</label>
-                            <input type="number" id="patient-age" name="age" value="<?php echo $patient_age; ?>" readonly>
-                        </div>
-                    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="patient-name">Patient's Name</label>
+            <input type="text" id="patient-name" name="patient_name" value="<?php echo $patient['firstName'] . ' ' . $patient['lastName']; ?>" readonly>
+        </div>
+        <div class="form-group">
+            <label for="patient-age">Age</label>
+            <input type="number" id="patient-age" name="age" value="<?php echo $patient_age; ?>" readonly>
+        </div>
+    </div>
 
-                    <div class="form-group">
-                        <label>Gender</label>
-                        <div class="radio-group">
-                            <label>
-                                <input type="radio" name="gender" value="male" <?php if($patient['Gender'] === 'M') echo 'checked'; ?> disabled> Male
-                            </label>
-                            <label>
-                                <input type="radio" name="gender" value="female" <?php if($patient['Gender'] === 'F') echo 'checked'; ?> disabled> Female
-                            </label>
-                        </div>
-                    </div>
+    <div class="form-group">
+        <label>Gender</label>
+        <div class="radio-group">
+            <label>
+                <input type="radio" name="gender" value="male" <?php if($patient['Gender'] === 'M') echo 'checked'; ?> disabled> Male
+            </label>
+            <label>
+                <input type="radio" name="gender" value="female" <?php if($patient['Gender'] === 'F') echo 'checked'; ?> disabled> Female
+            </label>
+        </div>
+    </div>
 
-                    <div class="form-group">
-                        <label>Medications</label>
-                        <div class="checkbox-group">
-                            <label>
-                                <input type="checkbox" name="medications[]" value="1"> Prozac
-                            </label>
-                            <label>
-                                <input type="checkbox" name="medications[]" value="2"> Sertraline
-                            </label>
-                            <label>
-                                <input type="checkbox" name="medications[]" value="3"> Lamotrigine
-                            </label>
-                            <label>
-                                <input type="checkbox" name="medications[]" value="4"> Duloxetine
-                            </label>
-                        </div>
-                    </div>
+    <!-- ✅ Dynamic Medications from DB -->
+    <div class="form-group">
+        <label>Medications</label>
+        <div class="checkbox-group">
+            <?php if (mysqli_num_rows($result_meds) > 0): ?>
+                <?php while ($med = mysqli_fetch_assoc($result_meds)): ?>
+                    <label>
+                        <input type="checkbox" name="medications[]" value="<?php echo $med['id']; ?>">
+                        <?php echo $med['MedicationName']; ?>
+                    </label>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>No medications available.</p>
+            <?php endif; ?>
+        </div>
+    </div>
 
-                    <button type="submit" class="prebtn">Submit</button>
-                </form>
+    <button type="submit" class="prebtn">Submit</button>
+</form>
             </div>
         </div>
     </section>
