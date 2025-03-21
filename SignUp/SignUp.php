@@ -1,57 +1,59 @@
 <?php
 session_start();
+
+// Connect to database
 $connect = mysqli_connect("localhost", "root", "root", "cura");
 $error = mysqli_connect_error();
+$successMsg = "";
+$errorMsg = "";
 
 if ($error) {
     exit("Database connection failed: $error");
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check which form was submitted
-    if (isset($_POST["role"])) {
-        if ($_POST["role"] == "patient") {
-            $id = $_POST["id"];
-            $firstName = $_POST["first_name"];
-            $lastName = $_POST["last_name"];
-            $gender = $_POST["gender"];
-            $dob = $_POST["dob"];
-            $email = $_POST["email"];
-            $password = $_POST["password"];
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["role"])) {
+    if ($_POST["role"] === "patient") {
+        $id = $_POST["id"];
+        $firstName = $_POST["first_name"];
+        $lastName = $_POST["last_name"];
+        $gender = $_POST["gender"];
+        $dob = $_POST["dob"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
 
-            $sql = "INSERT INTO patients (PatientID, FirstName, LastName, Gender, DOB, Email, Password)
-                    VALUES ('$id', '$firstName', '$lastName', '$gender', '$dob', '$email', '$password')";
+        $sql = "INSERT INTO patients (PatientID, FirstName, LastName, Gender, DOB, Email, Password)
+                VALUES ('$id', '$firstName', '$lastName', '$gender', '$dob', '$email', '$password')";
 
-            if (mysqli_query($connect, $sql)) {
-                $successMsg = "Patient signed up successfully!";
-            } else {
-                $errorMsg = "Error: " . mysqli_error($connect);
-            }
+        if (mysqli_query($connect, $sql)) {
+            $successMsg = "Patient signed up successfully!";
+            $selectedRole = "patient";
+        } else {
+            $errorMsg = "Error: " . mysqli_error($connect);
         }
+    }
 
-        if ($_POST["role"] == "doctor") {
-            $id = $_POST["id"];
-            $firstName = $_POST["first_name"];
-            $lastName = $_POST["last_name"];
-            $speciality = $_POST["speciality"];
-            $email = $_POST["email"];
-            $password = $_POST["password"];
-            $photo = ""; // File upload handling not added here
+    if ($_POST["role"] === "doctor") {
+        $id = $_POST["id"];
+        $firstName = $_POST["first_name"];
+        $lastName = $_POST["last_name"];
+        $speciality = $_POST["speciality"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $photo = ""; // Optional: handle file upload
 
-            $sql = "INSERT INTO doctors (DoctorID, FirstName, LastName, Speciality, Email, Password)
-                    VALUES ('$id', '$firstName', '$lastName', '$speciality', '$email', '$password')";
+        $sql = "INSERT INTO doctors (DoctorID, FirstName, LastName, Speciality, Email, Password)
+                VALUES ('$id', '$firstName', '$lastName', '$speciality', '$email', '$password')";
 
-            if (mysqli_query($connect, $sql)) {
-                $successMsg = "Doctor signed up successfully!";
-            } else {
-                $errorMsg = "Error: " . mysqli_error($connect);
-            }
+        if (mysqli_query($connect, $sql)) {
+            $successMsg = "Doctor signed up successfully!";
+            $selectedRole = "doctor";
+        } else {
+            $errorMsg = "Error: " . mysqli_error($connect);
         }
     }
 }
 ?>
-
-<!-- Paste your HTML below, and include PHP to show messages -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>CURA - Sign Up</title>
     <link rel="stylesheet" href="Main.css">
     <link rel="stylesheet" href="SignUp.css">
-    <script src="SignUp.js"></script>
+    <style>
+        .hidden { display: none; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
 </head>
 <body>
 
@@ -77,20 +83,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="form-container">
         <h1>Create an Account</h1>
 
-        <!-- Feedback messages -->
+        <!-- Success/Error Message -->
         <?php if (!empty($successMsg)) echo "<p class='success'>$successMsg</p>"; ?>
         <?php if (!empty($errorMsg)) echo "<p class='error'>$errorMsg</p>"; ?>
 
+        <!-- Role Selection -->
         <div id="role-selection">
             <h3>Select Your Role</h3>
             <div class="radio-group">
-                <label><input type="radio" name="role" value="patient" onchange="showForm()"> Patient</label>
-                <label><input type="radio" name="role" value="doctor" onchange="showForm()"> Doctor</label>
+                <label>
+                    <input type="radio" name="role" value="patient" <?= (isset($selectedRole) && $selectedRole === "patient") ? "checked" : "" ?> onchange="showForm()"> Patient
+                </label>
+                <label>
+                    <input type="radio" name="role" value="doctor" <?= (isset($selectedRole) && $selectedRole === "doctor") ? "checked" : "" ?> onchange="showForm()"> Doctor
+                </label>
             </div>
         </div>
 
         <!-- Patient Form -->
-        <form id="patient-form" class="hidden" method="POST" action="SignUp">
+        <form id="patient-form" class="<?= (isset($selectedRole) && $selectedRole === 'patient') ? '' : 'hidden' ?>" method="POST">
             <input type="hidden" name="role" value="patient">
             <div class="form-row">
                 <div class="form-group">
@@ -136,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
 
         <!-- Doctor Form -->
-        <form id="doctor-form" class="hidden" method="POST" action="">
+        <form id="doctor-form" class="<?= (isset($selectedRole) && $selectedRole === 'doctor') ? '' : 'hidden' ?>" method="POST">
             <input type="hidden" name="role" value="doctor">
             <label for="doctor-first-name">First Name</label>
             <input type="text" id="doctor-first-name" name="first_name" required>
@@ -175,6 +186,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </p>
     </div>
 </footer>
+
+<!-- JS: Show the selected form based on radio input -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        function showForm() {
+            const selectedRole = document.querySelector('input[name="role"]:checked').value;
+            const patientForm = document.getElementById('patient-form');
+            const doctorForm = document.getElementById('doctor-form');
+
+            if (selectedRole === 'patient') {
+                patientForm.classList.remove('hidden');
+                doctorForm.classList.add('hidden');
+            } else if (selectedRole === 'doctor') {
+                doctorForm.classList.remove('hidden');
+                patientForm.classList.add('hidden');
+            }
+        }
+
+        const radioButtons = document.querySelectorAll('input[name="role"]');
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', showForm);
+            if (radio.checked) showForm();
+        });
+    });
+</script>
 
 </body>
 </html>
