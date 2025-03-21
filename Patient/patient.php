@@ -56,7 +56,7 @@ $result_appointments = mysqli_query($conn, $query_appointments);
                 <span>CURA</span>
             </a>
         </div>
-        <a href="../logout.php" id="patientSignOut" style="margin-left: auto;">Sign Out</a>
+        <a href="../LogOut/LogOut.php" id="patientSignOut" style="margin-left: auto;">Sign Out</a>
     </nav>
 
     <section id="patientWelcome">

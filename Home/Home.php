@@ -9,7 +9,7 @@ if (isset($_SESSION['DOCTOR_ID'])) {
     $redirectSignup = '../Patient/patient.php';
 } else {
     $redirectLogin = '../Login/logIn.php';
-    $redirectSignup = '../SignUp/SingUp.php';
+    $redirectSignup = '../SignUp/SignUp.php';
 }
 ?>
 

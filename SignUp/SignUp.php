@@ -54,163 +54,162 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["role"])) {
     }
 }
 ?>
-<!DOCTYPE html>
+
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CURA - Sign Up</title>
-    <link rel="stylesheet" href="Main.css">
+    <link rel="stylesheet" href="../Main.css">
     <link rel="stylesheet" href="SignUp.css">
-    <style>
-        .hidden { display: none; }
-        .success { color: green; }
-        .error { color: red; }
-    </style>
 </head>
+
 <body>
-
-<nav class="navbar">
-    <div class="container">
-        <a href="Home.html" class="logo"><span>CURA</span></a>
-    </div>
-</nav>
-
-<section class="signup-section">
-    <div class="left-column">
-        <p>Welcome to</p>
-        <h2>CURA Clinic.</h2>
-    </div>
-    <div class="form-container">
-        <h1>Create an Account</h1>
-
-        <!-- Success/Error Message -->
-        <?php if (!empty($successMsg)) echo "<p class='success'>$successMsg</p>"; ?>
-        <?php if (!empty($errorMsg)) echo "<p class='error'>$errorMsg</p>"; ?>
-
-        <!-- Role Selection -->
-        <div id="role-selection">
-            <h3>Select Your Role</h3>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="role" value="patient" <?= (isset($selectedRole) && $selectedRole === "patient") ? "checked" : "" ?> onchange="showForm()"> Patient
-                </label>
-                <label>
-                    <input type="radio" name="role" value="doctor" <?= (isset($selectedRole) && $selectedRole === "doctor") ? "checked" : "" ?> onchange="showForm()"> Doctor
-                </label>
-            </div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <a href="../Home/Home.php" class="logo">
+                <span>CURA</span>
+            </a>
         </div>
+    </nav>
+    
+    <section class="signup-section">
+        <div class="left-column">
 
-        <!-- Patient Form -->
-        <form id="patient-form" class="<?= (isset($selectedRole) && $selectedRole === 'patient') ? '' : 'hidden' ?>" method="POST">
-            <input type="hidden" name="role" value="patient">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="patient-first-name">First Name</label>
-                    <input type="text" id="patient-first-name" name="first_name" required>
-                </div>
-                <div class="form-group">
-                    <label for="patient-last-name">Last Name</label>
-                    <input type="text" id="patient-last-name" name="last_name" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="patient-id">Patient ID</label>
-                    <input type="text" id="patient-id" name="id" required>
-                </div>
-                <div class="form-group">
-                    <label for="patient-gender">Gender</label>
-                    <select id="patient-gender" name="gender" required>
-                        <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
+
+
+                 <p>Welcome to</p> 
+                 <h2>CURA Clinic.</h2>
+        </div>
+        <div class="form-container">
+            <h1>Create an Account</h1>
+            <div id="role-selection">
+                <h3>Select Your Role</h3>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="role" value="patient" onchange="showForm()"> Patient
+                    </label>
+                    <label>
+                        <input type="radio" name="role" value="doctor" onchange="showForm()"> Doctor
+                    </label>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="patient-dob">Date of Birth</label>
-                    <input type="date" id="patient-dob" name="dob" required>
+            <form id="patient-form" class="hidden" action="" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="patient-first-name">First Name</label>
+                        <input type="text" id="patient-first-name" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-last-name">Last Name</label>
+                        <input type="text" id="patient-last-name" name="last_name" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="patient-email">Email</label>
-                    <input type="email" id="patient-email" name="email" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="patient-id">Patient ID</label>
+                        <input type="text" id="patient-id" name="id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-gender">Gender</label>
+                        <select id="patient-gender" name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group full-width">
-                    <label for="patient-password">Password</label>
-                    <input type="password" id="patient-password" name="password" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="patient-dob">Date of Birth</label>
+                        <input type="date" id="patient-dob" name="dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-email">Email</label>
+                        <input type="email" id="patient-email" name="email" required>
+                    </div>
                 </div>
-            </div>
-            <button type="submit" class="Signupbtn">Sign Up</button>
-        </form>
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="patient-password">Password</label>
+                        <input type="password" id="patient-password" name="password" required>
+                    </div>
+                </div>
+                <button type="submit" class="Signupbtn">Sign Up</button>
+            </form>
 
-        <!-- Doctor Form -->
-        <form id="doctor-form" class="<?= (isset($selectedRole) && $selectedRole === 'doctor') ? '' : 'hidden' ?>" method="POST">
-            <input type="hidden" name="role" value="doctor">
-            <label for="doctor-first-name">First Name</label>
-            <input type="text" id="doctor-first-name" name="first_name" required>
+            <form id="doctor-form" class="hidden" action="" method="POST">
+                <label for="doctor-first-name">First Name</label>
+                <input type="text" id="doctor-first-name" name="first_name" required>
 
-            <label for="doctor-last-name">Last Name</label>
-            <input type="text" id="doctor-last-name" name="last_name" required>
+                <label for="doctor-last-name">Last Name</label>
+                <input type="text" id="doctor-last-name" name="last_name" required>
 
-            <label for="doctor-id">ID</label>
-            <input type="text" id="doctor-id" name="id" required>
+                <label for="doctor-id">ID</label>
+                <input type="text" id="doctor-id" name="id" required>
 
-            <label for="doctor-speciality">Speciality</label>
-            <select id="doctor-speciality" name="speciality" required>
-                <option value="">Select Speciality</option>
-                <option value="Child">Parent & Child Therapy</option>
-                <option value="couple">Individual Counseling</option>
-                <option value="Psychiatry">Workshops & Seminars</option>
-            </select>
+                <label for="doctor-photo">Photo</label>
+                <input type="file" id="doctor-photo" name="photo" accept="image/*" required>
 
-            <label for="doctor-email">Email</label>
-            <input type="email" id="doctor-email" name="email" required>
+                <label for="doctor-speciality">Speciality</label>
+                <select id="doctor-speciality" name="speciality" required>
+                    <option value="">Select Speciality</option>
+                    <option value="Child">Parent & Child Therapy</option>
+                    <option value="couple">Individual Conseling</option>
+                    <option value="Psychiatry">Workshops & Seminars</option>
 
-            <label for="doctor-password">Password</label>
-            <input type="password" id="doctor-password" name="password" required>
+                </select>
 
-            <button type="submit" class="Signupbtn">Sign Up</button>
-        </form>
-    </div>
-</section>
+                <label for="doctor-email">Email</label>
+                <input type="email" id="doctor-email" name="email" required>
 
-<footer class="footer">
-    <div class="container">
-        <p>&copy; 2025 CURA | All Rights Reserved</p>
-        <p class="contact-info">
-            <strong>Address:</strong> 7720 Riyadh, Laysen Valley, 44321<br>
-            <strong>Phone:</strong> (966) 556-789-5900
-        </p>
-    </div>
-</footer>
+                <label for="doctor-password">Password</label>
+                <input type="password" id="doctor-password" name="password" required>
 
-<!-- JS: Show the selected form based on radio input -->
-<script>
+                <button type="submit" class="Signupbtn">Sign Up</button>
+            </form>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 CURA | All Rights Reserved</p>
+            <p class="contact-info">
+                <strong>Address:</strong> 7720 Riyadh, Laysen Valley, 44321<br>
+                <strong>Phone:</strong> (966) 556-789-5900
+            </p>
+            <ul class="social-links">
+                <li><img src="../images/twitter.webp" alt="Twitter"></li>
+                <li><img src="../images/free-instagram-logo-icon-3497-thumb.png" alt="Instagram"></li>
+                <li><img src="../images/Email542689.png" alt="Email"></li>
+            </ul>
+        </div>
+    </footer>
+    <script>
     document.addEventListener('DOMContentLoaded', () => {
-        function showForm() {
-            const selectedRole = document.querySelector('input[name="role"]:checked').value;
-            const patientForm = document.getElementById('patient-form');
-            const doctorForm = document.getElementById('doctor-form');
+    function showForm() {
+        const selectedRole = document.querySelector('input[name="role"]:checked').value;
+        const patientForm = document.getElementById('patient-form');
+        const doctorForm = document.getElementById('doctor-form');
 
-            if (selectedRole === 'patient') {
-                patientForm.classList.remove('hidden');
-                doctorForm.classList.add('hidden');
-            } else if (selectedRole === 'doctor') {
-                doctorForm.classList.remove('hidden');
-                patientForm.classList.add('hidden');
-            }
+        if (selectedRole === 'patient') {
+            patientForm.classList.remove('hidden');
+            doctorForm.classList.add('hidden');
+        } else if (selectedRole === 'doctor') {
+            doctorForm.classList.remove('hidden');
+            patientForm.classList.add('hidden');
         }
+    }
 
-        const radioButtons = document.querySelectorAll('input[name="role"]');
-        radioButtons.forEach(radio => {
-            radio.addEventListener('change', showForm);
-            if (radio.checked) showForm();
-        });
+   
+    const radioButtons = document.querySelectorAll('input[name="role"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', showForm);
     });
-</script>
-
+    });
+    </script>
 </body>
+
 </html>

@@ -87,7 +87,7 @@ function calculateAge($dob) {
         <a href="../Home/Home.php" class="logo">
             <span>CURA</span>
         </a>
-        <a href="../logout.php" class="signout-btn" style="margin-left: auto;">Sign Out</a>
+        <a href="../LogOut/LogOut.php" class="signout-btn" style="margin-left: auto;">Sign Out</a>
     </div>
 </nav>
 
