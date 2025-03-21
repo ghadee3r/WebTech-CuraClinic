@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Navbar Start -->
     <nav class="navbar">
         <div class="container">
-            <a href="../Home/Home.html" class="logo">
+            <a href="../Home/Home.php" class="logo">
                 <span>CURA</span>
             </a>
         </div>

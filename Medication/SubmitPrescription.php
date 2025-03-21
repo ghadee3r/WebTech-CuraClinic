@@ -1,75 +1,59 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// Database connection
 $host = "localhost";
 $db_user = "root";
 $db_pass = "root";
 $db_name = "cura";
 
-$conn = mysqli_connect($host, $db_user, $db_pass, $db_name,'8889');
+$conn = mysqli_connect($host, $db_user, $db_pass, $db_name, '8889');
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
 if (!isset($_SESSION['DOCTOR_ID'])) {
-    header("Location: ../login.php");
+    header("Location: ../Login/login.php");
     exit();
 }
 
 $doctor_id = $_SESSION['DOCTOR_ID'];
 
-// Get patient ID from POST
-$patient_id = $_POST['patient_ID'];
+$patient_id = intval($_POST['patient_id']);
+$appointment_id = intval($_POST['appointment_id']);
+$medications = $_POST['medications'] ?? [];
 
-// Medications selected
-$medications = isset($_POST['medications']) ? $_POST['medications'] : [];
-
-if (empty($medications)) {
-    die("No medications selected.");
+if (!$patient_id || !$appointment_id || empty($medications)) {
+    die("Missing data. Make sure you selected medications.");
 }
 
-// Find the latest confirmed appointment for this doctor and patient
-$sql_appointment = "
+$sql_check = "
     SELECT id FROM Appointment
-    WHERE DoctorID = $doctor_id AND PatientID = $patient_id AND status = 'Confirmed'
-    ORDER BY date DESC, time DESC
-    LIMIT 1
+    WHERE id = $appointment_id AND DoctorID = $doctor_id AND PatientID = $patient_id
 ";
 
-$result_appointment = mysqli_query($conn, $sql_appointment);
-
-if (!$result_appointment || mysqli_num_rows($result_appointment) == 0) {
-    die("No confirmed appointment found.");
+$result_check = mysqli_query($conn, $sql_check);
+if (!$result_check || mysqli_num_rows($result_check) == 0) {
+    die("Unauthorized operation.");
 }
 
-$appointment = mysqli_fetch_assoc($result_appointment);
-$appointment_id = $appointment['id'];
-
-// 1. Update appointment status to Done
-$update_status = "
+$sql_update_appt = "
     UPDATE Appointment
     SET status = 'Done'
     WHERE id = $appointment_id
 ";
+mysqli_query($conn, $sql_update_appt);
 
-if (!mysqli_query($conn, $update_status)) {
-    die("Failed to update appointment status.");
-}
+foreach ($medications as $med_id) {
+    $med_id = intval($med_id);
 
-// 2. Insert prescriptions
-foreach ($medications as $medication_id) {
-    $insert_prescription = "
+    $sql_insert_presc = "
         INSERT INTO Prescription (AppointmentID, MedicationID)
-        VALUES ($appointment_id, $medication_id)
+        VALUES ($appointment_id, $med_id)
     ";
-
-    if (!mysqli_query($conn, $insert_prescription)) {
-        die("Failed to insert prescription for medication ID $medication_id");
-    }
+    mysqli_query($conn, $sql_insert_presc);
 }
 
-// 3. Redirect to doctor homepage
-header("Location: doctor_homepage.php");
+header("Location: ../Doctor/doctor.php");
 exit();
-?>

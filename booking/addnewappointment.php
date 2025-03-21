@@ -18,7 +18,7 @@ $time = $_POST['time'];
 $reason = $_POST['reason'];
 
 
-$patientID = $_SESSION['patient_id'] ?? 1;
+$patientID = $_SESSION['patient_ID'] ?? 1;
 
 
 $status = 'Pending';

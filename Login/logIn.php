@@ -8,7 +8,7 @@ $password = "root";
 $database = "cura"; 
 
 // Create connection
-$conn = mysqli_connect($servername, $username, $password, $database);
+$conn = mysqli_connect($servername, $username, $password, $database, '8889');
 
 // Check connection
 if (!$conn) {
@@ -39,11 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (password_verify($password, $hashedPassword)) {
                 if ($role == "doctor") {
                     $_SESSION["DOCTOR_ID"] = $id;
-                    header("Location: doctor.php"); // Redirect to doctor homepage
+                    header("Location: ../Doctor/doctor.php"); // Redirect to doctor homepage
                     exit();
                 } else {
                     $_SESSION["patient_ID"] = $id;
-                    header("Location: patient.php"); // Redirect to patient homepage
+                    header("Location: ../Patient/patient.php"); // Redirect to patient homepage
                     exit();
                 }
             } else {

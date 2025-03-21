@@ -14,7 +14,7 @@ if (!$conn) {
 
 // Check if doctor is logged in
 if (!isset($_SESSION['DOCTOR_ID'])) {
-    header("Location: ../login.php");
+    header("Location: ../Login/logIn.php");
     exit();
 }
 
