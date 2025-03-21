@@ -38,11 +38,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verify password
             if (password_verify($password, $hashedPassword)) {
                 if ($role == "doctor") {
+                        $_SESSION['USER_TYPE'] = 'doctor';
                     $_SESSION["DOCTOR_ID"] = $id;
                     header("Location: ../Doctor/doctor.php"); // Redirect to doctor homepage
                     exit();
                 } else {
                     $_SESSION["patient_ID"] = $id;
+                        $_SESSION['USER_TYPE'] = 'patient';
                     header("Location: ../Patient/patient.php"); // Redirect to patient homepage
                     exit();
                 }
