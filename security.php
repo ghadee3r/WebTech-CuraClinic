@@ -4,7 +4,7 @@ session_start();
 function curaSecurity($requiredUserType) {
     // Check if user is logged in
     if (!isset($_SESSION['USER_TYPE'])) {
-        // Not logged in, redirect to home (or login)
+        // Not logged in, redirect to home 
         header("Location: ../Home/Home.php");
         exit();
     }

@@ -1,18 +1,18 @@
 <?php
 session_start();
 
-// Logic to handle button redirects
 if (isset($_SESSION['DOCTOR_ID'])) {
-    $redirectLogin = '../Doctor/doctor.php';   // Doctor homepage
-    $redirectSignup = '../Doctor/doctor.php';  // Doctor homepage or any other page
-} elseif (isset($_SESSION['patient_ID'])) {
-    $redirectLogin = '../Patient/patient.php'; // Patient homepage
-    $redirectSignup = '../Patient/patient.php'; // Patient homepage or any other page
+    $redirectLogin = '../Doctor/doctor.php';
+    $redirectSignup = '../Doctor/doctor.php';
+} elseif (isset($_SESSION['patient_ID'])) { 
+    $redirectLogin = '../Patient/patient.php';
+    $redirectSignup = '../Patient/patient.php';
 } else {
-    $redirectLogin = '../Login/logIn.php';    // Login page (HTML version)
-    $redirectSignup = '../SignUp/SingUp.php'; // Signup page (HTML version)
+    $redirectLogin = '../Login/logIn.php';
+    $redirectSignup = '../SignUp/SingUp.php';
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
