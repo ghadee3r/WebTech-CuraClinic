@@ -2,31 +2,37 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 session_start();
+
 $servername = "localhost"; 
 $username = "root"; 
 $password = "root"; 
-$database = "cura2"; 
+$database = "cura"; 
 
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $database);
+// Connect using procedural MySQLi
+$conn = mysqli_connect($servername, $username, $password, $database, '3306');
 
-// Check connection
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-if (!isset($_SESSION['patient_id']) || !isset($_GET['id'])) {
-    header("Location: patient_dashboard.php");
+
+if (!isset($_SESSION['patient_ID']) || !isset($_GET['id'])) {
+    header("Location: ../Patient/patient.php");
     exit();
 }
 
-$appointment_id = intval($_GET['id']);
-$patient_id = $_SESSION['patient_id'];
+$appointment_id = $_GET['id'];
+$patient_id = $_SESSION['patient_ID'];
 
-// Delete appointment only if it's pending
-$query_delete = "DELETE FROM appointments WHERE id = $appointment_id AND patient_id = $patient_id AND status = 'pending'";
-mysqli_query($conn, $query_delete);
+// Prepare and bind (procedural)
+$stmt = mysqli_prepare($conn, "DELETE FROM appointment WHERE ID = ? AND PatientID = ?");
+mysqli_stmt_bind_param($stmt, "ii", $appointment_id, $patient_id);
+mysqli_stmt_execute($stmt);
 
-header("Location: patient_dashboard.php");
+// Close statement and connection
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
+
+// Redirect
+header("Location: ../Patient/patient.php");
 exit();
 ?>
-

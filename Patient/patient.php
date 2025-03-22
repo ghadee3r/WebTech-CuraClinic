@@ -1,12 +1,15 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+include '../security.php';
+curaSecurity('doctor');
+
 session_start();
 $servername = "localhost"; 
 $username = "root"; 
 $password = "root"; 
 $database = "cura"; 
-$port='8889';
+$port='3306';
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $database,$port);
@@ -67,11 +70,11 @@ $result_appointments = mysqli_query($conn, $query_appointments);
         
         <div id="patientInfoContainer">
             <div id="patientInfo">
-                <br><span id="patientName"><?php $patient['firstName'] . ' ' . $patient['lastName'] ?></span><br>
-                <p><strong>Patient ID:</strong> <?php $patient_id ?></p>
-                <p><strong>Gender:</strong> <?php $patient['Gender'] ?></p>
-                <p><strong>Date of Birth:</strong> <?php $patient['DoB'] ?></p>
-                <p><strong>Email:</strong> <?php $patient['emailAddress'] ?></p>
+                <br><span id="patientName"><?php echo $patient['firstName'] . ' ' . $patient['lastName'] ?></span><br>
+                <p><strong>Patient ID:</strong> <?php echo $patient_id ?></p>
+                <p><strong>Gender:</strong> <?php echo $patient['Gender'] ?></p>
+                <p><strong>Date of Birth:</strong> <?php echo $patient['DoB'] ?></p>
+                <p><strong>Email:</strong> <?php echo $patient['emailAddress'] ?></p>
             </div>
             
             <nav>
@@ -94,22 +97,18 @@ $result_appointments = mysqli_query($conn, $query_appointments);
         <tbody>
             <?php while ($row = mysqli_fetch_assoc($result_appointments)): ?>
                 <tr>
-                    <td><?php $row['time'] ?></td>
-                    <td><?php $row['date'] ?></td>
-                    <td><?php $row['doctor_name'] ?></td>
+                    <td><?php echo $row['time'] ?></td>
+                    <td><?php echo $row['date'] ?></td>
+                    <td><?php echo $row['doctor_name'] ?></td>
                     <td>
-                        <img src="../DBimages/<?php $row['doctor_photo'] ?>" 
+                        <img src="../DBimages/<?php echo $row['doctor_photo'] ?>" 
                              alt="Doctor Photo" class="patientDoctorPhoto">
                     </td>
-                    <td><?php $row['status'] ?></td>
+                    <td><?php echo $row['status'] ?></td>
                     <td>
-                        <?php if ($row['status'] === 'pending'): ?>
-                              <a href="cancel_appointment.php?id=<?= $row['ID'] ?>" onclick="return confirm('Are you sure you want to cancel this appointment?');">
-                                <button class="patientCancel">Cancel</button>
-                            </a>
-                        <?php else: ?>
-                            N/A
-                        <?php endif; ?>
+                      <a href="cancel_appointment.php?id=<?= $row['ID'] ?>" onclick="return confirm('Are you sure you want to cancel this appointment?');">
+                      <button class="patientCancel">Cancel</button>
+                       </a>
                     </td>
                 </tr>
             <?php endwhile; ?>
