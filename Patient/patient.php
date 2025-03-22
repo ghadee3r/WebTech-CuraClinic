@@ -68,7 +68,7 @@ $result_appointments = mysqli_query($conn, $query_appointments);
 <body>
     <nav class="navbar" style="box-shadow: 0 5px 6px rgba(0, 0, 0, 0.1);">
         <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-            <a href="../Home/Home.html" class="logo">
+            <a href="../Home/Home.php" class="logo">
                 <span>CURA</span>
             </a>
         </div>
