@@ -2,9 +2,11 @@
 session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+include '../security.php';
+curaSecurity('patient');
 
 // Database connection
-$con = mysqli_connect('localhost', 'root', 'root', 'cura', '3306');
+$con = mysqli_connect('localhost', 'root', 'root', 'cura', '8889');
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -162,3 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['speciality'])) {
 
 </body>
 </html>
+
+<?php
+// Close MySQL connection
+mysqli_close($con);
+?>

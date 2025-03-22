@@ -2,7 +2,8 @@
 session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
+include '../security.php';
+curaSecurity('doctor');
 // Database connection
 $host = "localhost";
 $db_user = "root";
@@ -150,3 +151,7 @@ $result_meds = mysqli_query($conn, $sql_meds);
 
 </body>
 </html>
+<?php
+// Close MySQL connection
+mysqli_close($conn);
+?>

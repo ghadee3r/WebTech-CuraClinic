@@ -9,7 +9,7 @@ $password = "root";
 $database = "cura"; 
 
 // Connect using procedural MySQLi
-$conn = mysqli_connect($servername, $username, $password, $database, '3306');
+$conn = mysqli_connect($servername, $username, $password, $database, '8889');
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());

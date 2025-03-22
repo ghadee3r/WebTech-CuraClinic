@@ -57,3 +57,8 @@ foreach ($medications as $med_id) {
 
 header("Location: ../Doctor/doctor.php");
 exit();
+
+
+// Close MySQL connection
+mysqli_close($conn);
+?>

@@ -43,4 +43,7 @@ if (isset($_GET['appointment_id'])) {
 } else {
     echo "No appointment selected.";
 }
+
+// Close MySQL connection
+mysqli_close($conn);
 ?>

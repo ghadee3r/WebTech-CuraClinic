@@ -9,7 +9,6 @@ if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-
 $patientID = $_SESSION['patient_ID'];
 
 $doctorID = $_POST['hiddenDoctorID'];
@@ -22,10 +21,16 @@ $sql = "INSERT INTO appointment (DoctorID, PatientID, date, time, reason, status
         VALUES ('$doctorID', '$patientID', '$date', '$time', '$reason', 'Pending')";
 
 if (mysqli_query($con, $sql)) {
-    // Redirect to patient's home with message
-    header("Location: ../Patient/patient.php?message=Appointment+requested+successfully");
+    // Set the message in session (invisible in URL)
+    $_SESSION['appointment_message'] = "Appointment requested successfully";
+    
+    // Redirect to patient's home page
+    header("Location: ../Patient/patient.php");
     exit();
 } else {
     echo "Error: " . mysqli_error($con);
 }
+
+// Close MySQL connection
+mysqli_close($con);
 ?>

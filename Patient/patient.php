@@ -1,23 +1,34 @@
 <?php
+session_start();
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 include '../security.php';
-curaSecurity('doctor');
+curaSecurity('patient');
 
-session_start();
+// Check if there is a message to show
+if (isset($_SESSION['appointment_message'])) {
+    $message = $_SESSION['appointment_message'];
+    echo "<p style='color: green; text-align:center;'>$message</p>";
+
+    // Unset the message so it doesn't show again on refresh
+    unset($_SESSION['appointment_message']);
+} // <<< FIX: Closing the if block here
+
 $servername = "localhost"; 
 $username = "root"; 
 $password = "root"; 
 $database = "cura"; 
-$port='3306';
+$port = '8889';
 
 // Create connection
-$conn = mysqli_connect($servername, $username, $password, $database,$port);
+$conn = mysqli_connect($servername, $username, $password, $database, $port);
 
 // Check connection
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
+
 // Ensure the patient is logged in
 if (!isset($_SESSION['patient_ID'])) { 
     header("Location: ../login.php");
@@ -34,11 +45,13 @@ $patient = mysqli_fetch_assoc($result_patient);
 // Fetch patient appointments with doctor details
 $query_appointments = "
     SELECT a.ID, a.date, a.time, a.status, 
-           d.firstName AS doctor_name, d.uniqueFileName AS doctor_photo
+           CONCAT(d.firstName, ' ', d.lastName) AS doctor_name, 
+           d.uniqueFileName AS doctor_photo
     FROM appointment a
     JOIN doctor d ON a.DoctorID = d.ID
     WHERE a.PatientID = $patient_id
     ORDER BY a.date, a.time";
+
 $result_appointments = mysqli_query($conn, $query_appointments);
 ?>
 

@@ -8,7 +8,7 @@ $password = "root";
 $database = "cura"; 
 
 // Create connection
-$conn = mysqli_connect($servername, $username, $password, $database, '3306');
+$conn = mysqli_connect($servername, $username, $password, $database, '8889');
 
 // Check connection
 if (!$conn) {

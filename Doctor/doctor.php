@@ -218,3 +218,7 @@ function calculateAge($dob) {
 
 </body>
 </html>
+<?php
+// Close MySQL connection
+mysqli_close($conn);
+?>
