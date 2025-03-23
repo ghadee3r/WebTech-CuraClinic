@@ -75,7 +75,7 @@ $result_appointments = mysqli_query($conn, $query_appointments);
 
     <section id="patientWelcome">
         <div id="patientWelcomeLeft">
-            <h2>Welcome, <?php $patient['firstName'] ?>!</h2>
+            <h2>Welcome, <?php echo $patient['firstName'] ?>!</h2>
             <p>Your journey to wellness starts here.</p> 
         </div>
         
