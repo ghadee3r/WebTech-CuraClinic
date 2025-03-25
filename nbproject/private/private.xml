@@ -5,9 +5,12 @@
         <group>
             <file>file:/C:/MAMP/htdocs/WebTech-CuraClinic/Doctor/doctor.php</file>
             <file>file:/C:/MAMP/htdocs/WebTech-CuraClinic/Login/logIn.php</file>
+            <file>file:/C:/MAMP/htdocs/WebTech-CuraClinic/booking/booking.css</file>
+            <file>file:/C:/MAMP/htdocs/WebTech-CuraClinic/uploadimages.php</file>
             <file>file:/C:/MAMP/htdocs/WebTech-CuraClinic/SignUp/SignUp.php</file>
+            <file>file:/C:/MAMP/htdocs/WebTech-CuraClinic/Patient/cancel_appointment.php</file>
             <file>file:/C:/MAMP/htdocs/WebTech-CuraClinic/Patient/patient.php</file>
-            <file>file:/C:/MAMP/htdocs/WebTech-CuraClinic/Login/logIn.html</file>
+            <file>file:/C:/MAMP/htdocs/WebTech-CuraClinic/booking/booking.php</file>
         </group>
     </open-files>
 </project-private>
