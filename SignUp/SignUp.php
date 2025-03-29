@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 session_start();
 
-$connect = mysqli_connect("localhost", "root", "root", "cura" , '8889');
+$connect = mysqli_connect("localhost", "root", "root", "cura");
 $error = mysqli_connect_error();
 $successMsg = "";
 $errorMsg = "";
@@ -178,8 +178,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["role"])) {
             <select id="doctor-speciality" name="speciality" required>
                 <option value="">Select Speciality</option>
                 <option value="1">Parent & Child Therapy</option>
-                <option value="2">Individual Counseling</option>
-                <option value="3">Workshops & Seminars</option>
+                <option value="2">Couples Therapy</option>
+                <option value="3">Individual Counseling</option>
+                <option value="4">Workshops & Seminars</option>
             </select>
 
             <label for="doctor-email">Email</label>

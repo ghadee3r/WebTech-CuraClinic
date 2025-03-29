@@ -17,10 +17,10 @@ $servername = "localhost";
 $username = "root"; 
 $password = "root"; 
 $database = "cura"; 
-$port = '8889';
+
 
 // Create connection
-$conn = mysqli_connect($servername, $username, $password, $database, $port);
+$conn = mysqli_connect($servername, $username, $password, $database);
 
 // Check connection
 if (!$conn) {

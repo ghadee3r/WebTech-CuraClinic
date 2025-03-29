@@ -10,7 +10,7 @@ $db_user = "root";
 $db_pass = "root";
 $db_name = "cura";
 
-$conn = mysqli_connect($host, $db_user, $db_pass, $db_name, '8889');
+$conn = mysqli_connect($host, $db_user, $db_pass, $db_name);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }

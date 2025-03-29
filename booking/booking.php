@@ -6,7 +6,7 @@ include '../security.php';
 curaSecurity('patient');
 
 // Database connection
-$con = mysqli_connect('localhost', 'root', 'root', 'cura', '8889');
+$con = mysqli_connect('localhost', 'root', 'root', 'cura');
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }

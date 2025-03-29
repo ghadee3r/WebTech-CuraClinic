@@ -1,4 +1,5 @@
-﻿
+
+/* Sign-Up Section */
 .signup-section {
     display: flex;
     justify-content: center; 
@@ -9,28 +10,25 @@
     margin: 5% auto; 
     border-radius: 10px;
 
-
+body {
     display: flex;
     flex-direction: column;
     min-height: 100vh; 
-
 }
 
 footer {
     margin-top: auto; 
 }
 
-
 .left-column {
     padding: 2rem;
     flex: 1;
-    background-image: url('images/signup3.jpg');
+    background-image: url('../images/signup3.jpg');
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     height: 720px;
     width: 100rem;
-    border-radius: 10px 0 0 10px;
+    border-radius: 10px 0 0 10px; 
 }
-
 
 .form-container {
     flex: 1;
@@ -112,15 +110,16 @@ form .Signupbtn {
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     margin-top: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow here */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
 }
 
 
  .Signupbtn:hover {
     background-color: #c6c6c6;
 }
-
 form select {
 
     font-family: 'Times New Roman', Times, serif;
+} 
+
 }
