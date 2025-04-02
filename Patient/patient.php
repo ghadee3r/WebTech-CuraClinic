@@ -47,7 +47,7 @@ $query_appointments = "
            d.uniqueFileName AS doctor_photo
     FROM appointment a
     JOIN doctor d ON a.DoctorID = d.ID
-    WHERE a.PatientID = $patient_id
+    WHERE a.PatientID = $patient_id AND a.status != 'Done'
     ORDER BY a.date, a.time";
 
 $result_appointments = mysqli_query($conn, $query_appointments);

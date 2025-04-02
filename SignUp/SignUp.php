@@ -70,6 +70,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["role"])) {
         }
     }
 }
+$specialities = [];
+$speciality_query = "SELECT ID, speciality FROM speciality";
+$speciality_result = mysqli_query($connect, $speciality_query);
+
+if ($speciality_result && mysqli_num_rows($speciality_result) > 0) {
+    while ($row = mysqli_fetch_assoc($speciality_result)) {
+        $specialities[] = $row;
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,14 +184,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["role"])) {
             <label for="doctor-id">ID</label>
             <input type="text" id="doctor-id" name="id" required>
 
-            <label for="doctor-speciality">Speciality</label>
-            <select id="doctor-speciality" name="speciality" required>
-                <option value="">Select Speciality</option>
-                <option value="1">Parent & Child Therapy</option>
-                <option value="2">Couples Therapy</option>
-                <option value="3">Individual Counseling</option>
-                <option value="4">Workshops & Seminars</option>
-            </select>
+<label for="doctor-speciality">Speciality</label>
+<select id="doctor-speciality" name="speciality" required>
+    <option value="">Select Speciality</option>
+    <?php foreach ($specialities as $spec): ?>
+        <option value="<?= $spec['ID'] ?>">
+            <?= htmlspecialchars($spec['speciality']) ?>
+        </option>
+    <?php endforeach; ?>
+</select>
+
 
             <label for="doctor-email">Email</label>
             <input type="email" id="doctor-email" name="email" required>
