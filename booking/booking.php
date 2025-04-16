@@ -14,43 +14,41 @@ if (!$con) {
 $specialties = [];
 $doctors = [];
 
-// Retrieve all specialties for the first form
+// Get all specialties
 $sql_specialties = "SELECT * FROM speciality";
 $result_specialties = mysqli_query($con, $sql_specialties);
-
 while ($row = mysqli_fetch_assoc($result_specialties)) {
     $specialties[] = $row;
 }
 
-// If the request is GET: Retrieve all doctors and their specialities (optional, to display all doctors initially)
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $sql_doctors = "SELECT d.*, s.speciality AS speciality_name
-                    FROM doctor d
-                    INNER JOIN speciality s ON d.SpecialityID = s.ID";
-    $result_doctors = mysqli_query($con, $sql_doctors);
-
-    while ($row = mysqli_fetch_assoc($result_doctors)) {
-        $doctors[] = $row;
-    }
+// Default: Show all doctors
+$sql_doctors = "SELECT d.*, s.speciality AS speciality_name
+                FROM doctor d
+                INNER JOIN speciality s ON d.SpecialityID = s.ID";
+$result_doctors = mysqli_query($con, $sql_doctors);
+while ($row = mysqli_fetch_assoc($result_doctors)) {
+    $doctors[] = $row;
 }
 
-// If the first form is submitted (POST): Filter doctors by the selected specialty
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['speciality'])) {
+// If specialty selected, filter doctors
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['speciality']) && $_POST['speciality'] !== "") {
     $selectedSpecialty = $_POST['speciality'];
 
-    $sql_doctors = "SELECT d.*, s.speciality AS speciality_name
-                    FROM doctor d
-                    INNER JOIN speciality s ON d.SpecialityID = s.ID
-                    WHERE s.speciality = '$selectedSpecialty'";
-    $result_doctors = mysqli_query($con, $sql_doctors);
+    $sql_filtered = "SELECT d.*, s.speciality AS speciality_name
+                     FROM doctor d
+                     INNER JOIN speciality s ON d.SpecialityID = s.ID
+                     WHERE s.speciality = ?";
+    $stmt = mysqli_prepare($con, $sql_filtered);
+    mysqli_stmt_bind_param($stmt, "s", $selectedSpecialty);
+    mysqli_stmt_execute($stmt);
+    $result_filtered = mysqli_stmt_get_result($stmt);
 
     $doctors = [];
-    while ($row = mysqli_fetch_assoc($result_doctors)) {
+    while ($row = mysqli_fetch_assoc($result_filtered)) {
         $doctors[] = $row;
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,9 +78,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['speciality'])) {
         <div class="form-group">
             <label for="specialty">Choose a Specialty:</label>
             <select id="specialty" name="speciality" required>
-                <option value="" disabled selected>Select a specialty</option>
+                <option value="" disabled <?php if (!isset($selectedSpecialty)) echo 'selected'; ?>>Select a specialty</option>
                 <?php foreach ($specialties as $specialty): ?>
-                    <option value="<?php echo $specialty['speciality']; ?>">
+                    <option value="<?php echo $specialty['speciality']; ?>" 
+                        <?php if (isset($selectedSpecialty) && $selectedSpecialty === $specialty['speciality']) echo 'selected'; ?>>
                         <?php echo $specialty['speciality']; ?>
                     </option>
                 <?php endforeach; ?>
@@ -92,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['speciality'])) {
     </form>
 
     <!-- FORM 2: Choose a Doctor and Book Appointment -->
-    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($doctors)): ?>
+    <?php if (!empty($doctors)): ?>
         <form class="appointment-form" action="addnewappointment.php" method="POST">
             
             <!-- Doctor selection -->
@@ -143,7 +142,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['speciality'])) {
         });
         </script>
     <?php endif; ?>
-
 </main>
 
 <!-- Footer -->
