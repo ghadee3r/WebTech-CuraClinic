@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // Database connection
-$con = mysqli_connect('localhost', 'root', 'root', 'cura');
+$con = mysqli_connect('localhost', 'root', 'root', 'cura',8889);
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }

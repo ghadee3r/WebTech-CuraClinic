@@ -20,7 +20,7 @@ $database = "cura";
 
 
 // Create connection
-$conn = mysqli_connect($servername, $username, $password, $database);
+$conn = mysqli_connect($servername, $username, $password, $database,8889);
 
 // Check connection
 if (!$conn) {
@@ -117,9 +117,10 @@ $result_appointments = mysqli_query($conn, $query_appointments);
                     </td>
                     <td><?php echo $row['status'] ?></td>
                     <td>
-                      <a href="cancel_appointment.php?id=<?= $row['ID'] ?>" onclick="return confirm('Are you sure you want to cancel this appointment?');">
+<!--                      <a href="cancel_appointment.php?id=<?= $row['ID'] ?>" onclick="return confirm('Are you sure youuuuu want to cancel this appointment?');">
                       <button class="patientCancel">Cancel</button>
-                       </a>
+                       </a>-->
+                        <button class="patientCancel" onclick="cancelAppointment(<?= $row['ID'] ?>, this)">Cancel</button>
                     </td>
                 </tr>
             <?php endwhile; ?>
@@ -140,6 +141,27 @@ $result_appointments = mysqli_query($conn, $query_appointments);
             </ul>
         </div>
     </footer>
+    <script>
+function cancelAppointment(appointmentId, buttonElement) {
+    if (!confirm("Are you sure you want to cancel this appointment?")) return;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "cancel_appointment_ajax.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onload = function () {
+        if (xhr.status === 200 && xhr.responseText.trim() === "true") {
+            const row = buttonElement.closest("tr");
+            row.remove(); // حذف الصف من الجدول
+        } else {
+            alert("Failed to cancel appointment. Please try again.");
+        }
+    };
+
+    xhr.send("id=" + appointmentId);
+}
+</script>
+
 </body>
 </html>
 
