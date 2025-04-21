@@ -6,7 +6,7 @@ include '../security.php';
 curaSecurity('patient');
 
 // Database connection
-$con = mysqli_connect('localhost', 'root', 'root', 'cura',8889);
+$con = mysqli_connect('localhost', 'root', 'root', 'cura');
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -21,32 +21,13 @@ while ($row = mysqli_fetch_assoc($result_specialties)) {
     $specialties[] = $row;
 }
 
-// Default: Show all doctors
+// Show all doctors by default
 $sql_doctors = "SELECT d.*, s.speciality AS speciality_name
                 FROM doctor d
                 INNER JOIN speciality s ON d.SpecialityID = s.ID";
 $result_doctors = mysqli_query($con, $sql_doctors);
 while ($row = mysqli_fetch_assoc($result_doctors)) {
     $doctors[] = $row;
-}
-
-// If specialty selected, filter doctors
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['speciality']) && $_POST['speciality'] !== "") {
-    $selectedSpecialty = $_POST['speciality'];
-
-    $sql_filtered = "SELECT d.*, s.speciality AS speciality_name
-                     FROM doctor d
-                     INNER JOIN speciality s ON d.SpecialityID = s.ID
-                     WHERE s.speciality = ?";
-    $stmt = mysqli_prepare($con, $sql_filtered);
-    mysqli_stmt_bind_param($stmt, "s", $selectedSpecialty);
-    mysqli_stmt_execute($stmt);
-    $result_filtered = mysqli_stmt_get_result($stmt);
-
-    $doctors = [];
-    while ($row = mysqli_fetch_assoc($result_filtered)) {
-        $doctors[] = $row;
-    }
 }
 ?>
 
@@ -73,75 +54,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['speciality']) && $_PO
     <h2>Book an Appointment</h2>
     <p>Select your desired specialty and fill in the details below.</p>
 
-    <!-- FORM 1: Choose a Specialty -->
-    <form class="specialty-form" action="booking.php" method="POST">
+    <!-- Specialty Dropdown (No form submission) -->
+<form>
+    <div class="form-group">
+        <label for="specialty">Choose a Specialty:</label>
+        <select id="specialty" name="speciality" class="styled-select" required>
+            <option value="" disabled selected>Select a specialty</option>
+            <?php foreach ($specialties as $specialty): ?>
+                <option value="<?php echo $specialty['speciality']; ?>">
+                    <?php echo $specialty['speciality']; ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</form>
+
+    <!-- FORM 2: Choose a Doctor and Book Appointment -->
+    <form class="appointment-form" action="addnewappointment.php" method="POST">
         <div class="form-group">
-            <label for="specialty">Choose a Specialty:</label>
-            <select id="specialty" name="speciality" required>
-                <option value="" disabled <?php if (!isset($selectedSpecialty)) echo 'selected'; ?>>Select a specialty</option>
-                <?php foreach ($specialties as $specialty): ?>
-                    <option value="<?php echo $specialty['speciality']; ?>" 
-                        <?php if (isset($selectedSpecialty) && $selectedSpecialty === $specialty['speciality']) echo 'selected'; ?>>
-                        <?php echo $specialty['speciality']; ?>
+            <label for="doctor">Choose a Doctor:</label>
+            <select id="doctor" name="doctorID" required>
+                <option value="" disabled selected>Select a doctor</option>
+                <?php foreach ($doctors as $doctor): ?>
+                    <option value="<?php echo $doctor['ID']; ?>">
+                        <?php echo $doctor['firstName'] . ' ' . $doctor['lastName']; ?>
                     </option>
                 <?php endforeach; ?>
             </select>
         </div>
-        <button type="submit" class="submit-button">Next</button>
+
+        <input type="hidden" name="hiddenDoctorID" id="hiddenDoctorID" value="">
+
+        <div class="form-group">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+
+        <div class="form-group">
+            <label for="time">Select Time:</label>
+            <input type="time" id="time" name="time" required>
+        </div>
+
+        <div class="form-group">
+            <label for="reason">Reason for Visit:</label>
+            <textarea id="reason" name="reason" rows="4" required></textarea>
+        </div>
+
+        <input type="submit" class="submit-button" value="Book Appointment">
     </form>
-
-    <!-- FORM 2: Choose a Doctor and Book Appointment -->
-    <?php if (!empty($doctors)): ?>
-        <form class="appointment-form" action="addnewappointment.php" method="POST">
-            
-            <!-- Doctor selection -->
-            <div class="form-group">
-                <label for="doctor">Choose a Doctor:</label>
-                <select id="doctor" name="doctorID" required>
-                    <option value="" disabled selected>Select a doctor</option>
-                    <?php foreach ($doctors as $doctor): ?>
-                        <option value="<?php echo $doctor['ID']; ?>">
-                            <?php echo $doctor['firstName'] . ' ' . $doctor['lastName']; ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-
-            <!-- Hidden doctor ID field -->
-            <input type="hidden" name="hiddenDoctorID" id="hiddenDoctorID" value="">
-
-            <!-- Date selection -->
-            <div class="form-group">
-                <label for="date">Select Date:</label>
-                <input type="date" id="date" name="date" required>
-            </div>
-
-            <!-- Time selection -->
-            <div class="form-group">
-                <label for="time">Select Time:</label>
-                <input type="time" id="time" name="time" required>
-            </div>
-
-            <!-- Reason for visit -->
-            <div class="form-group">
-                <label for="reason">Reason for Visit:</label>
-                <textarea id="reason" name="reason" rows="4" placeholder="Briefly describe the reason for your visit..." required></textarea>
-            </div>
-
-            <!-- Submit appointment -->
-            <input type="submit" class="submit-button" value="Book Appointment">
-        </form>
-
-        <script>
-        // Sync hidden doctor ID with doctor selection
-        const doctorSelect = document.getElementById('doctor');
-        const hiddenDoctorInput = document.getElementById('hiddenDoctorID');
-
-        doctorSelect.addEventListener('change', function() {
-            hiddenDoctorInput.value = this.value;
-        });
-        </script>
-    <?php endif; ?>
 </main>
 
 <!-- Footer -->
@@ -160,10 +120,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['speciality']) && $_PO
     </div>
 </footer>
 
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#specialty').on('change', function () {
+        var selectedSpecialty = $(this).val();
+
+        $.ajax({
+            url: 'get_doctors_by_specialty.php',
+            type: 'POST',
+            data: { specialty: selectedSpecialty },
+            success: function (response) {
+                const doctors = JSON.parse(response);
+                const doctorSelect = $('#doctor');
+                doctorSelect.empty().append('<option value="" disabled selected>Select a doctor</option>');
+
+                if (doctors.length > 0) {
+                    doctors.forEach(doc => {
+                        doctorSelect.append(`<option value="${doc.ID}">${doc.firstName} ${doc.lastName}</option>`);
+                    });
+                } else {
+                    doctorSelect.append('<option disabled>No doctors found</option>');
+                }
+            }
+        });
+    });
+
+    $('#doctor').on('change', function () {
+        $('#hiddenDoctorID').val($(this).val());
+    });
+});
+</script>
+
 </body>
 </html>
 
 <?php
-// Close MySQL connection
 mysqli_close($con);
 ?>

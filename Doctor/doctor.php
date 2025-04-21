@@ -11,7 +11,7 @@ $db_user = "root";
 $db_pass = "root";
 $db_name = "cura";
 
-$conn = mysqli_connect($host, $db_user, $db_pass, $db_name,8889);
+$conn = mysqli_connect($host, $db_user, $db_pass, $db_name);
 
 // Check connection
 if (!$conn) {
@@ -133,7 +133,8 @@ function calculateAge($dob) {
                         <td><?php echo $appt['time']; ?></td>
                         <td>
                             <?php if ($appt['status'] === 'Pending'): ?>
-                                <a href="confirm_appointment.php?appointment_id=<?php echo $appt['appointment_id']; ?>" class="confirm-btn">Confirm</a>
+                                <a href="#" class="confirm-btn" data-id="<?php echo $appt['appointment_id']; ?>" data-patient-id="<?php echo $appt['PatientID']; ?>">Confirm</a>
+
                             <?php elseif ($appt['status'] === 'Confirmed'): ?>
                                 <a href="../Medication/PrescribeMedication.php?patient_id=<?php echo $appt['PatientID']; ?>&appointment_id=<?php echo $appt['appointment_id']; ?>" class="prescribe-btn">Prescribe</a>
 
@@ -214,6 +215,35 @@ function calculateAge($dob) {
         </ul>
     </div>
 </footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('.confirm-btn').on('click', function (e) {
+        e.preventDefault();
+        const btn = $(this);
+        const appointmentId = btn.data('id');
+        const patientId = btn.data('patient-id');
+
+        $.ajax({
+            url: 'confirm_appointment_ajax.php',
+            type: 'POST',
+            data: { appointment_id: appointmentId },
+            success: function (response) {
+                if (response === "true" || response === true) {
+                    // Replace the Confirm button with the Prescribe button
+                    const prescribeUrl = `../Medication/PrescribeMedication.php?patient_id=${patientId}&appointment_id=${appointmentId}`;
+                    btn.replaceWith(`<a href="${prescribeUrl}" class="prescribe-btn">Prescribe</a>`);
+                } else {
+                    alert('Failed to confirm appointment.');
+                }
+            },
+            error: function () {
+                alert('Error in AJAX request.');
+            }
+        });
+    });
+});
+</script>
 
 </body>
 </html>
