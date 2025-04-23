@@ -228,22 +228,26 @@ $(document).ready(function () {
             url: 'confirm_appointment_ajax.php',
             type: 'POST',
             data: { appointment_id: appointmentId },
+            dataType: 'json', // Expect JSON from the server
             success: function (response) {
-                if (response === "true" || response === true) {
-                    // Replace the Confirm button with the Prescribe button
+                console.log("AJAX success response:", response);
+
+                if (response.success === true) {
                     const prescribeUrl = `../Medication/PrescribeMedication.php?patient_id=${patientId}&appointment_id=${appointmentId}`;
                     btn.replaceWith(`<a href="${prescribeUrl}" class="prescribe-btn">Prescribe</a>`);
                 } else {
-                    alert('Failed to confirm appointment.');
+                    alert('❌ Failed to confirm appointment: ' + (response.error || 'Unknown error'));
                 }
             },
-            error: function () {
-                alert('Error in AJAX request.');
+            error: function (xhr, status, error) {
+                console.error("AJAX error:", xhr.responseText);
+                alert('🚨 Error in AJAX request.');
             }
         });
     });
 });
 </script>
+
 
 </body>
 </html>

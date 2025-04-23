@@ -5,29 +5,49 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 /**
+ * Checks if request is via AJAX
+ */
+function is_ajax() {
+    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+           strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+}
+
+/**
  * Enforces role-based access.
  * 
  * @param string $requiredRole 'doctor' or 'patient'
  */
 function curaSecurity($requiredRole) {
-    // Check if role session is missing or mismatched
     if (!isset($_SESSION['USER_TYPE']) || $_SESSION['USER_TYPE'] !== $requiredRole) {
-        // Clear session just in case
         session_unset();
         session_destroy();
-        // Redirect to login or home
-        header("Location: ../Home/Home.php");
+
+        if (is_ajax()) {
+            header("Content-Type: application/json");
+            echo json_encode(["error" => "unauthorized"]);
+        } else {
+            header("Location: ../Home/Home.php");
+        }
         exit();
     }
 
-    // Additionally check that the corresponding ID is set
     if ($requiredRole === 'doctor' && !isset($_SESSION['DOCTOR_ID'])) {
-        header("Location: ../Login/logIn.php");
+        if (is_ajax()) {
+            header("Content-Type: application/json");
+            echo json_encode(["error" => "doctor_id_missing"]);
+        } else {
+            header("Location: ../Login/logIn.php");
+        }
         exit();
     }
 
     if ($requiredRole === 'patient' && !isset($_SESSION['patient_ID'])) {
-        header("Location: ../Login/logIn.php");
+        if (is_ajax()) {
+            header("Content-Type: application/json");
+            echo json_encode(["error" => "patient_id_missing"]);
+        } else {
+            header("Location: ../Login/logIn.php");
+        }
         exit();
     }
 }
