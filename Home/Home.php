@@ -34,7 +34,7 @@ if (isset($_SESSION['DOCTOR_ID'])) {
 <!-- Navbar Start -->
 <nav class="navbar" style="box-shadow: 0 5px 6px rgba(0, 0, 0, 0.1);">
     <div class="container">
-        <a href="Home.php" class="logo">
+        <a href="https://cura.42web.io/WebTech-CuraClinic-master/Home/Home.php" class="logo">
             <span>CURA</span>
         </a>
     </div>
