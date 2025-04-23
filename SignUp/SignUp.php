@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 session_start();
 
-$connect = mysqli_connect("localhost", "root", "root", "cura",8889);
+$connect = mysqli_connect("localhost", "root", "root", "cura");
 $error = mysqli_connect_error();
 $successMsg = "";
 $errorMsg = "";
