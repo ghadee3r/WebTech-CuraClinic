@@ -1,37 +1,37 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 session_start();
+include '../security.php';
+curaSecurity('patient');
 
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$database = "cura";
+header("Content-Type: text/plain");
 
-$conn = mysqli_connect($servername, $username, $password, $database,8889);
+$conn = mysqli_connect("localhost", "root", "root", "cura");
 if (!$conn) {
     echo "false";
-    exit();
+    exit;
 }
 
-if (!isset($_SESSION['patient_ID']) || !isset($_POST['id'])) {
-    echo "false";
-    exit();
-}
+if (isset($_POST['id'])) {
+    $id = intval($_POST['id']);
 
-$appointment_id = intval($_POST['id']);
-$patient_id = $_SESSION['patient_ID'];
+    // Optional: Only allow canceling appointments that belong to the current patient
+    $patient_id = $_SESSION['patient_ID'];
+    $check_query = "SELECT * FROM appointment WHERE ID = ? AND PatientID = ?";
+    $check_stmt = mysqli_prepare($conn, $check_query);
+    mysqli_stmt_bind_param($check_stmt, "ii", $id, $patient_id);
+    mysqli_stmt_execute($check_stmt);
+    mysqli_stmt_store_result($check_stmt);
 
-$query = "SELECT * FROM appointment WHERE ID = $appointment_id AND PatientID = $patient_id AND status != 'Done'";
-$result = mysqli_query($conn, $query);
-
-if (mysqli_num_rows($result) === 1) {
-    $delete_query = "DELETE FROM appointment WHERE ID = $appointment_id AND PatientID = $patient_id";
-    if (mysqli_query($conn, $delete_query)) {
-        echo "true";
+    if (mysqli_stmt_num_rows($check_stmt) > 0) {
+        $sql = "DELETE FROM appointment WHERE ID = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "i", $id);
+        $success = mysqli_stmt_execute($stmt);
+        echo $success ? "true" : "false"; // ✅ RIGHT HERE
     } else {
         echo "false";
     }
+
 } else {
     echo "false";
 }
