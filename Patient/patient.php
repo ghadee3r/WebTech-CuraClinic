@@ -117,9 +117,6 @@ $result_appointments = mysqli_query($conn, $query_appointments);
                     </td>
                     <td><?php echo $row['status'] ?></td>
                     <td>
-<!--                      <a href="cancel_appointment.php?id=<?= $row['ID'] ?>" onclick="return confirm('Are you sure youuuuu want to cancel this appointment?');">
-                      <button class="patientCancel">Cancel</button>
-                       </a>-->
                         <button class="patientCancel" onclick="cancelAppointment(<?= $row['ID'] ?>, this)">Cancel</button>
                     </td>
                 </tr>
@@ -149,14 +146,16 @@ function cancelAppointment(appointmentId, buttonElement) {
     xhr.open("POST", "cancel_appointment_ajax.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    xhr.onload = function () {
-        if (xhr.status === 200 && xhr.responseText.trim() === "true") {
-            const row = buttonElement.closest("tr");
-            row.remove(); // حذف الصف من الجدول
-        } else {
-            alert("Failed to cancel appointment. Please try again.");
-        }
-    };
+   xhr.onload = function () {
+    console.log("Server response:", xhr.responseText); // 👈 أضف هذا
+    if (xhr.status === 200 && xhr.responseText.trim() === "true") {
+        const row = buttonElement.closest("tr");
+        row.remove(); 
+    } else {
+        alert("Failed to cancel appointment. Please try again.");
+    }
+};
+
 
     xhr.send("id=" + appointmentId);
 }
